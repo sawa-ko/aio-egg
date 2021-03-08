@@ -37,10 +37,7 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 RUN sudo locale-gen en_US.UTF-8 \
-    && sudo dpkg-reconfigure locales    
-
-    # Puppeter
-RUN sudo sysctl -w kernel.unprivileged_userns_clone=1
+    && sudo dpkg-reconfigure locales
 
     # Configuration
 USER container
