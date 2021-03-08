@@ -41,15 +41,13 @@ RUN apt-get update \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-    # Add user so we don't need --no-sandbox.
-RUN groupadd -r container && useradd -r -g container -G audio,video container \
-    && mkdir -p /home/container/Downloads \
-    && chown -R container:container /home/container \
-    && chown -R container:container ./node_modules
-
     # Puppeter
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
+
+    # Add user so we don't need --no-sandbox.
+RUN groupadd -r container && useradd -r -g container -G audio,video container \
+    && chown -R container:container /home/container
 
     # Configuration
 USER container
