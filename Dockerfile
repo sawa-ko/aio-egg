@@ -17,6 +17,9 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
+RUN sudo locale-gen en_US.UTF-8 \
+    && sudo dpkg-reconfigure locales
+
     # NodeJS
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt -y install nodejs \
@@ -38,7 +41,7 @@ RUN apt-get update && \
     apt-get -y install sudo
 
     # Puppeter
-CMD sudo sysctl -w kernel.unprivileged_userns_clone=1
+RUN sudo sysctl -w kernel.unprivileged_userns_clone=1
 
     # Configuration
 USER container
