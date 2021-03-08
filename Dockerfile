@@ -26,8 +26,11 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt -y install build-essential \
     && apt -y install wget \ 
     && apt -y install curl
+
+    # Python 2 & 3
+RUN apt -y install python python-pip python3 python3-pip
     
-# Install basic software support
+    # Install basic software support
 RUN apt-get update && \
     apt-get install --yes software-properties-common \
     && apt-get install -y wget gnupg \
@@ -37,9 +40,6 @@ RUN apt-get update && \
     && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
-    
-# Python 2 & 3
-RUN apt -y install python python-pip python3 python3-pip
 
 USER container
 ENV  USER container
