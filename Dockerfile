@@ -8,7 +8,8 @@ RUN apt update \
     && apt-get install -y default-jre \
     && useradd -d /home/container -m container \
     && apt-get update \
-    && apt-get install -yq libgconf-2-4
+    && apt-get install -yq libgconf-2-4 \
+    && apt-get -y install libnss3-dev libxss1
 
     # Ensure UTF-8
 RUN locale-gen en_US.UTF-8
@@ -35,9 +36,11 @@ RUN apt-get update && \
 USER container
 ENV  USER container
 ENV  HOME /home/container
-
 WORKDIR /home/container
-
 COPY ./entrypoint.sh /entrypoint.sh
 
+    # Puppeter
+CMD sysctl -w kernel.unprivileged_userns_clone=1
+
+    # Init
 CMD ["/bin/bash", "/entrypoint.sh"]
