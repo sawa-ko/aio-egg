@@ -7,7 +7,7 @@ RUN apt update \
     && apt -y install curl software-properties-common locales git \
     && apt-get install -y default-jre \
     && useradd -d /home/container -m container \
-    && apt-get update
+    && apt-get update \
     && apt-get install -yq libgconf-2-4 \
 
     # Grant sudo permissions to container user for commands
