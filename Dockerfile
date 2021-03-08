@@ -40,6 +40,9 @@ RUN apt-get update && \
     && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
       --no-install-recommends
 
+    # Puppeter 
+RUN sudo sysctl -w kernel.unprivileged_userns_clone=1
+
 USER container
 ENV  USER container
 ENV  HOME /home/container
