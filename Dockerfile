@@ -8,7 +8,7 @@ RUN apt update \
     && apt-get install -y default-jre \
     && useradd -d /home/container -m container \
     && apt-get update \
-    && apt-get install -yq libgconf-2-4 \
+    && apt-get install -yq libgconf-2-4
 
     # Grant sudo permissions to container user for commands
 RUN apt-get update && \
