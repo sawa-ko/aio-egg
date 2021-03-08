@@ -9,7 +9,8 @@ RUN apt update \
     && useradd -d /home/container -m container \
     && apt-get update \
     && apt-get install -yq libgconf-2-4 \
-    && apt-get -y install libnss3-dev libxss1
+    && apt-get -y install libnss3-dev libxss1 \
+    && apt-get -y install chromium-browser
 
     # Ensure UTF-8
 RUN locale-gen en_US.UTF-8
