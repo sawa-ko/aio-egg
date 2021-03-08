@@ -27,16 +27,20 @@ RUN apt -y install python python-pip python3 python3-pip
     # Install basic software support
 RUN apt-get update && \
     apt-get install --yes software-properties-common
+
+    # Grant sudo permissions to container user for commands
+RUN apt-get update && \
+    apt-get -y install sudo
     
     # Ensure UTF-8
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
-RUN locale-gen en_US.UTF-8 \
-    && dpkg-reconfigure locales    
+RUN sudo locale-gen en_US.UTF-8 \
+    && sudo dpkg-reconfigure locales    
 
     # Puppeter
-RUN sysctl -w kernel.unprivileged_userns_clone=1
+RUN sudo sysctl -w kernel.unprivileged_userns_clone=1
 
     # Configuration
 USER container
