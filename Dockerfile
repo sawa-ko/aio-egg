@@ -32,15 +32,19 @@ RUN apt -y install python python-pip python3 python3-pip
 RUN apt-get update && \
     apt-get install --yes software-properties-common
 
+    # Grant sudo permissions to container user for commands
+RUN apt-get update && \
+    apt-get -y install sudo
+
+    # Puppeter
+CMD sudo sysctl -w kernel.unprivileged_userns_clone=1
+
     # Configuration
 USER container
 ENV  USER container
 ENV  HOME /home/container
 WORKDIR /home/container
 COPY ./entrypoint.sh /entrypoint.sh
-
-    # Puppeter
-CMD sysctl -w kernel.unprivileged_userns_clone=1
 
     # Init
 CMD ["/bin/bash", "/entrypoint.sh"]
