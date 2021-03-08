@@ -8,6 +8,7 @@ RUN apt update \
     && apt-get install -y default-jre \
     && useradd -d /home/container -m container \
     && apt-get update
+    && apt-get install -yq libgconf-2-4 \
 
     # Grant sudo permissions to container user for commands
 RUN apt-get update && \
@@ -32,16 +33,28 @@ RUN apt -y install python python-pip python3 python3-pip
     
     # Install basic software support
 RUN apt-get update && \
-    apt-get install --yes software-properties-common \
-    && apt-get install -y wget gnupg \
+    apt-get install --yes software-properties-common
+
+    # Puppeter 
+RUN apt-get update && apt-get install -y wget --no-install-recommends \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
-    && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
-      --no-install-recommends
+    && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
+      --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get purge --auto-remove -y curl \
+    && rm -rf /src/*.deb
 
-    # Puppeter 
-RUN sudo sysctl -w kernel.unprivileged_userns_clone=1
+    # Add user so we don't need --no-sandbox.
+RUN groupadd -r container && useradd -r -g container -G audio,video container \
+    && mkdir -p /home/container/Downloads \
+    && chown -R container:container /home/container \
+    && chown -R container:container ./node_modules
+
+    # Puppeter
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
+RUN chmod +x /usr/local/bin/dumb-init
 
 USER container
 ENV  USER container
