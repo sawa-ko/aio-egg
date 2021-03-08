@@ -11,14 +11,6 @@ RUN apt update \
     && apt-get install -yq libgconf-2-4 \
     && apt-get -y install libnss3-dev libxss1 \
     && apt-get -y install chromium
-    
-    # Ensure UTF-8
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-
-RUN sudo locale-gen en_US.UTF-8 \
-    && sudo dpkg-reconfigure locales
 
     # NodeJS
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
@@ -35,13 +27,16 @@ RUN apt -y install python python-pip python3 python3-pip
     # Install basic software support
 RUN apt-get update && \
     apt-get install --yes software-properties-common
-
-    # Grant sudo permissions to container user for commands
-RUN apt-get update && \
-    apt-get -y install sudo
+    
+    # Ensure UTF-8
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+RUN locale-gen en_US.UTF-8 \
+    && dpkg-reconfigure locales    
 
     # Puppeter
-RUN sudo sysctl -w kernel.unprivileged_userns_clone=1
+RUN sysctl -w kernel.unprivileged_userns_clone=1
 
     # Configuration
 USER container
