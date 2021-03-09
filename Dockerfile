@@ -21,7 +21,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt -y install curl
 
     # Python 2 & 3
-RUN apt -y install python python-pip python3 python3-pip pkg-config
+RUN apt -y install python python-pip python3 python3-pip
     
     # Install basic software support
 RUN apt-get update && \
