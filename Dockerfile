@@ -19,8 +19,12 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt -y install make \
     && apt -y install build-essential \
     && apt -y install wget \ 
-    && apt -y install curl \
-    && apt -y install yarn
+    && apt -y install curl
+
+    # Install Yarn package manager
+RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN apt update && apt -y install yarn
 
     # Python 2 & 3
 RUN apt -y install python python-pip python3 python3-pip
