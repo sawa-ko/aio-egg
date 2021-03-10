@@ -19,7 +19,8 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt -y install make \
     && apt -y install build-essential \
     && apt -y install wget \ 
-    && apt -y install curl
+    && apt -y install curl \
+    && apt -y install yarn
 
     # Python 2 & 3
 RUN apt -y install python python-pip python3 python3-pip
@@ -34,10 +35,7 @@ RUN apt-get update && \
     
     # Ensure UTF-8
 RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-RUN sudo locale-gen en_US.UTF-8 \
-    && sudo dpkg-reconfigure locales
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8
 
     # Configuration
 USER container
