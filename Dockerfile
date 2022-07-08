@@ -13,7 +13,7 @@ RUN apt update \
     && apt-get -y install pkg-config
 
     # NodeJS
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt -y install nodejs \
     && apt -y install ffmpeg \
     && apt -y install make \
